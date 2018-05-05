@@ -2,6 +2,9 @@
  <FormLayout>
     <FormBox :title="'Register'">
       <v-form v-model="valid">
+        <v-alert type="error" v-model="hasError">
+          {{ errorMessage }}
+        </v-alert>
         <v-text-field v-for="{ label, model, icon, type } in fields"
           :type="type"
           :key="model"
@@ -16,7 +19,7 @@
         :buttonDisable="!valid"
         :subText="`Already have an account? Login!`"
         @buttonClick="handleSubmit"
-        @subClick="handleSubClick"
+        @subClick="pushToLogin"
       />
     </FormBox>
  </FormLayout>
@@ -44,6 +47,8 @@ export default {
       username: ''
     },
     valid: false,
+    hasError: false,
+    errorMessage: '',
     fields: [
       {
         label: 'Name',
@@ -69,10 +74,22 @@ export default {
     ]
   }),
   methods: {
-    handleSubmit (e) {
-      console.log(e)
+    handleSubmit () {
+      if (this.valid) {
+        this.$apollo.mutate({
+          mutation: require('../graphql/RegisterUser.gql'),
+          variables: {
+            input: this.input
+          }
+        })
+          .then(this.pushToLogin)
+          .catch(error => {
+            this.errorMessage = error.graphQLErrors[0].message
+            this.hasError = true
+          })
+      }
     },
-    handleSubClick (e) {
+    pushToLogin () {
       this.$router.push({ name: 'auth.login' })
     }
   }
