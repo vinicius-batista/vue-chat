@@ -29,7 +29,7 @@
 import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
-import { email, password, name, username } from '@/support/mixins/rules'
+import { rules } from '@/support/mixins/rules'
 
 export default {
   name: 'Register',
@@ -38,7 +38,7 @@ export default {
     FormLayout,
     FormActions
   },
-  mixins: [email, password, name, username],
+  mixins: [rules(['email', 'password', 'name', 'username'])],
   data: () => ({
     input: {
       email: '',
