@@ -30,6 +30,7 @@ import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
 import { rules } from '@/support/mixins/rules'
+import { handleErrors } from '@/support/mixins/handleErrors'
 import { getData } from '@/helpers/getData'
 import localForage from 'localforage'
 
@@ -40,15 +41,16 @@ export default {
     FormLayout,
     FormActions
   },
-  mixins: [rules(['email', 'password'])],
+  mixins: [
+    rules(['email', 'password']),
+    handleErrors
+  ],
   data: () => ({
     valid: false,
     input: {
       email: '',
       password: ''
     },
-    errorMessage: '',
-    hasError: false,
     fields: [
       {
         label: 'Email',
@@ -79,10 +81,7 @@ export default {
           ])
         })
         .then(this.pushToDashboard)
-        .catch(error => {
-          this.errorMessage = error.graphQLErrors[0].message
-          this.hasError = true
-        })
+        .catch(this.handleError)
     },
     handleSubClick (e) {
       this.$router.push({ name: 'auth.register' })

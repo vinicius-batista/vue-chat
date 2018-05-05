@@ -30,6 +30,7 @@ import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
 import { rules } from '@/support/mixins/rules'
+import { handleErrors } from '@/support/mixins/handleErrors'
 
 export default {
   name: 'Register',
@@ -38,7 +39,10 @@ export default {
     FormLayout,
     FormActions
   },
-  mixins: [rules(['email', 'password', 'name', 'username'])],
+  mixins: [
+    rules(['email', 'password', 'name', 'username']),
+    handleErrors
+  ],
   data: () => ({
     input: {
       email: '',
@@ -47,8 +51,6 @@ export default {
       username: ''
     },
     valid: false,
-    hasError: false,
-    errorMessage: '',
     fields: [
       {
         label: 'Name',
@@ -83,10 +85,7 @@ export default {
           }
         })
           .then(this.pushToLogin)
-          .catch(error => {
-            this.errorMessage = error.graphQLErrors[0].message
-            this.hasError = true
-          })
+          .catch(this.handleError)
       }
     },
     pushToLogin () {
