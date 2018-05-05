@@ -1,5 +1,5 @@
 import { test, length, pickAll } from 'ramda'
-import { isNotEmpty } from '@/helpers/is-not-empty'
+import { isNotEmpty } from '@/helpers/isNotEmpty'
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const rulesObject = {
