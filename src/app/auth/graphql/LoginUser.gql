@@ -1,0 +1,6 @@
+mutation($input:LoginUserInput!){
+  loginUser(input:$input){
+    accessToken,
+    refreshToken
+  }
+}

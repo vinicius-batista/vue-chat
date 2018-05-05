@@ -2,6 +2,9 @@
   <FormLayout>
     <FormBox :title="'Login'">
       <v-form v-model="valid">
+        <v-alert type="error" v-model="hasError">
+          {{ errorMessage }}
+        </v-alert>
         <v-text-field v-for="{ label, model, icon, type } in fields"
           :type="type"
           :key="model"
@@ -27,6 +30,8 @@ import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
 import { rules } from '@/support/mixins/rules'
+import { getData } from '@/helpers/getData'
+import localForage from 'localforage'
 
 export default {
   name: 'Login',
@@ -42,6 +47,8 @@ export default {
       email: '',
       password: ''
     },
+    errorMessage: '',
+    hasError: false,
     fields: [
       {
         label: 'Email',
@@ -57,11 +64,31 @@ export default {
     ]
   }),
   methods: {
-    handleSubmit (e) {
-      console.log(e)
+    handleSubmit () {
+      this.$apollo.mutate({
+        mutation: require('../graphql/LoginUser.gql'),
+        variables: {
+          input: this.input
+        }
+      })
+        .then(getData('loginUser'))
+        .then(({ accessToken, refreshToken }) => {
+          Promise.all([
+            localForage.setItem('accessToken', accessToken),
+            localForage('refreshToken', refreshToken)
+          ])
+        })
+        .then(this.pushToDashboard)
+        .catch(error => {
+          this.errorMessage = error.graphQLErrors[0].message
+          this.hasError = true
+        })
     },
     handleSubClick (e) {
       this.$router.push({ name: 'auth.register' })
+    },
+    pushToDashboard () {
+      this.$router.push({ name: 'dashboard' })
     }
   }
 }
