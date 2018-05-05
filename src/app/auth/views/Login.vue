@@ -74,12 +74,7 @@ export default {
         }
       })
         .then(getData('loginUser'))
-        .then(({ accessToken, refreshToken }) => {
-          Promise.all([
-            localForage.setItem('accessToken', accessToken),
-            localForage('refreshToken', refreshToken)
-          ])
-        })
+        .then(this.setTokens)
         .then(this.pushToDashboard)
         .catch(this.handleError)
     },
@@ -88,6 +83,12 @@ export default {
     },
     pushToDashboard () {
       this.$router.push({ name: 'dashboard' })
+    },
+    setTokens ({ accessToken, refreshToken }) {
+      return Promise.all([
+        localForage.setItem('accessToken', accessToken),
+        localForage.setItem('refreshToken', refreshToken)
+      ])
     }
   }
 }
