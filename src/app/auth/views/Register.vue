@@ -1,7 +1,17 @@
 <template>
-  <FormLayout>
-    <FormBox :title="'Login'">
+ <FormLayout>
+    <FormBox :title="'Register'">
       <v-form v-model="valid">
+        <v-text-field
+          label="Name"
+          v-model="name"
+          prepend-icon="person"
+        />
+        <v-text-field
+          label="Username"
+          v-model="username"
+          prepend-icon="perm_identity"
+        />
         <v-text-field
           label="Email"
           v-model="email"
@@ -15,14 +25,14 @@
         />
       </v-form>
       <FormActions
-        :buttonText="'Login'"
+        :buttonText="'Register'"
         :buttonDisable="!valid"
-        :subText="`Don't have an account yet? Register now!`"
+        :subText="`Already have an account? Login!`"
         @buttonClick="handleSubmit"
         @subClick="handleSubClick"
       />
     </FormBox>
-  </FormLayout>
+ </FormLayout>
 </template>
 
 <script>
@@ -31,23 +41,25 @@ import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   components: {
     FormBox,
     FormLayout,
     FormActions
   },
   data: () => ({
-    valid: false,
     email: '',
-    password: ''
+    password: '',
+    name: '',
+    username: '',
+    valid: false
   }),
   methods: {
     handleSubmit (e) {
       console.log(e)
     },
     handleSubClick (e) {
-      this.$router.push({ name: 'auth.register' })
+      this.$router.push({ name: 'auth.login' })
     }
   }
 }
