@@ -67,7 +67,7 @@ export default {
   }),
   methods: {
     handleSubmit () {
-      this.$apollo.mutate({
+      return this.$apollo.mutate({
         mutation: require('../graphql/LoginUser.gql'),
         variables: {
           input: this.input
@@ -79,10 +79,10 @@ export default {
         .catch(this.handleError)
     },
     handleSubClick (e) {
-      this.$router.push({ name: 'auth.register' })
+      return this.$router.push({ name: 'auth.register' })
     },
     pushToDashboard () {
-      this.$router.push({ name: 'dashboard' })
+      return this.$router.push({ name: 'dashboard' })
     },
     setTokens ({ accessToken, refreshToken }) {
       return Promise.all([

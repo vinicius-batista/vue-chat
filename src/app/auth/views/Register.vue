@@ -78,7 +78,7 @@ export default {
   methods: {
     handleSubmit () {
       if (this.valid) {
-        this.$apollo.mutate({
+        return this.$apollo.mutate({
           mutation: require('../graphql/RegisterUser.gql'),
           variables: {
             input: this.input
@@ -89,7 +89,7 @@ export default {
       }
     },
     pushToLogin () {
-      this.$router.push({ name: 'auth.login' })
+      return this.$router.push({ name: 'auth.login' })
     }
   }
 }
