@@ -2,26 +2,11 @@
  <FormLayout>
     <FormBox :title="'Register'">
       <v-form v-model="valid">
-        <v-text-field
-          label="Name"
-          v-model="name"
-          prepend-icon="person"
-        />
-        <v-text-field
-          label="Username"
-          v-model="username"
-          prepend-icon="perm_identity"
-        />
-        <v-text-field
-          label="Email"
-          v-model="email"
-          prepend-icon="email"
-        />
-         <v-text-field
-          type="password"
-          label="Password"
-          v-model="password"
-          prepend-icon="lock"
+        <v-text-field v-for="{ label, model, icon} in fields"
+          :key="model"
+          :label="label"
+          v-model="input[model]"
+          :prepend-icon="icon"
         />
       </v-form>
       <FormActions
@@ -48,11 +33,35 @@ export default {
     FormActions
   },
   data: () => ({
-    email: '',
-    password: '',
-    name: '',
-    username: '',
-    valid: false
+    input: {
+      email: '',
+      password: '',
+      name: '',
+      username: ''
+    },
+    valid: false,
+    fields: [
+      {
+        label: 'Name',
+        model: 'name',
+        icon: 'person'
+      },
+      {
+        label: 'Username',
+        model: 'username',
+        icon: 'perm_identity'
+      },
+      {
+        label: 'Email',
+        model: 'email',
+        icon: 'email'
+      },
+      {
+        label: 'Password',
+        model: 'password',
+        icon: 'lock'
+      }
+    ]
   }),
   methods: {
     handleSubmit (e) {

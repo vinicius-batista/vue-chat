@@ -2,16 +2,11 @@
   <FormLayout>
     <FormBox :title="'Login'">
       <v-form v-model="valid">
-        <v-text-field
-          label="Email"
-          v-model="email"
-          prepend-icon="email"
-        />
-         <v-text-field
-          type="password"
-          label="Password"
-          v-model="password"
-          prepend-icon="lock"
+        <v-text-field v-for="{ label, model, icon} in fields"
+          :key="model"
+          :label="label"
+          v-model="input[model]"
+          :prepend-icon="icon"
         />
       </v-form>
       <FormActions
@@ -39,8 +34,22 @@ export default {
   },
   data: () => ({
     valid: false,
-    email: '',
-    password: ''
+    input: {
+      email: '',
+      password: ''
+    },
+    fields: [
+      {
+        label: 'Email',
+        model: 'email',
+        icon: 'email'
+      },
+      {
+        label: 'Password',
+        model: 'password',
+        icon: 'lock'
+      }
+    ]
   }),
   methods: {
     handleSubmit (e) {
