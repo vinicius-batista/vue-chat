@@ -5,8 +5,7 @@ import { graphqlRequest } from '@/helpers/request'
 import { getData } from '@/helpers/getData'
 import newAccessTokenQuery from './newAccessTokenQuery'
 import { authHeader } from '@/helpers/authHeader'
-
-let accessToken = null
+import store from '../store'
 
 const newAccessToken = (request) =>
   localforage.getItem('refreshToken')
@@ -15,27 +14,20 @@ const newAccessToken = (request) =>
     )
     .then(getData('newAccessToken'))
     .then(data => {
-      accessToken = data.accessToken
+      store.setAccessToken(data.accessToken)
       return authHeader(request, data.accessToken)
     })
     .catch(() => request)
 
 export const withAuthToken = setContext((request) => {
-  if (!accessToken) {
-    return localforage.getItem('accessToken')
-      .then((token) => {
-        if (!checkTokenExpired(token)) {
-          accessToken = token
-          return authHeader(request, accessToken)
-        }
+  return store
+    .accessToken()
+    .then(accessToken => {
+      if (!checkTokenExpired(accessToken)) {
+        return authHeader(request, accessToken)
+      }
 
-        return newAccessToken(request)
-      })
-  }
-
-  if (accessToken && !checkTokenExpired(accessToken)) {
-    return authHeader(request, accessToken)
-  }
-
-  return newAccessToken(request)
+      return newAccessToken(request)
+    })
+    .catch(() => request)
 })
