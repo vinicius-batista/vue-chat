@@ -32,7 +32,7 @@ import FormActions from '../components/FormActions'
 import { rules } from '@/support/mixins/rules'
 import { handleErrors } from '@/support/mixins/handleErrors'
 import { getData } from '@/helpers/getData'
-import localForage from 'localforage'
+import store from '@/services/store'
 
 export default {
   name: 'Login',
@@ -86,8 +86,8 @@ export default {
     },
     setTokens ({ accessToken, refreshToken }) {
       return Promise.all([
-        localForage.setItem('accessToken', accessToken),
-        localForage.setItem('refreshToken', refreshToken)
+        store.setAccessToken(accessToken),
+        store.setRefreshToken(refreshToken)
       ])
     }
   }
