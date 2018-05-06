@@ -5,7 +5,7 @@ export const graphqlRequest = (query, variables) =>
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ query: query, variables: variables }),
+    body: JSON.stringify({ query, variables }),
     method: 'POST'
   })
     .then(response => response.json())

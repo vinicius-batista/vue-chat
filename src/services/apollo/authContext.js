@@ -5,16 +5,16 @@ import { getData } from '@/helpers/getData'
 import newAccessTokenQuery from './newAccessTokenQuery'
 import { authHeader } from '@/helpers/authHeader'
 import store from '../store'
+import { prop } from 'ramda'
 
 const newAccessToken = (request) =>
   store
     .refreshToken()
     .then(refreshToken => graphqlRequest(newAccessTokenQuery, { refreshToken }))
     .then(getData('newAccessToken'))
-    .then(data => {
-      store.setAccessToken(data.accessToken)
-      return authHeader(request, data.accessToken)
-    })
+    .then(prop('accessToken'))
+    .then(accessToken => store.setAccessToken(accessToken))
+    .then(accessToken => authHeader(request, accessToken))
     .catch(() => request)
 
 export const withAuthToken = setContext((request) => {
