@@ -75,14 +75,14 @@ export default {
       })
         .then(getData('loginUser'))
         .then(this.setTokens)
-        .then(this.pushToDashboard)
+        .then(this.pushToRoot)
         .catch(this.handleError)
     },
     handleSubClick (e) {
       return this.$router.push({ name: 'auth.register' })
     },
-    pushToDashboard () {
-      return this.$router.push({ name: 'dashboard' })
+    pushToRoot () {
+      return this.$router.push({ name: 'root' })
     },
     setTokens ({ accessToken, refreshToken }) {
       return Promise.all([

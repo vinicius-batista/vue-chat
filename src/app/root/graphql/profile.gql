@@ -1,0 +1,13 @@
+query {
+  profile {
+    id,
+    name,
+    email,
+    username,
+    rooms {
+      id,
+      description,
+      name
+    }
+  }
+}

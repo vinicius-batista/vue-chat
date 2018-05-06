@@ -1,9 +1,12 @@
 import { authRoutes } from './auth'
+import Root from './root'
 
 export default [
   ...authRoutes,
   {
     path: '/',
-    redirect: '/auth/login'
+    name: 'root',
+    component: Root,
+    meta: { requiresAuth: true }
   }
 ]
