@@ -1,7 +1,7 @@
 <template>
   <div>
-    <NavBar />
-    <SideBar />
+    <NavBar @changeSideBarVisibility="changeSideBarVisibility"/>
+    <SideBar :visibility="sideBarVisibility"/>
     <router-view></router-view>
   </div>
 </template>
@@ -15,6 +15,14 @@ export default {
   components: {
     NavBar,
     SideBar
+  },
+  data: () => ({
+    sideBarVisibility: true
+  }),
+  methods: {
+    changeSideBarVisibility () {
+      this.sideBarVisibility = !this.sideBarVisibility
+    }
   }
 }
 </script>

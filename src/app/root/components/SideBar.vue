@@ -3,6 +3,8 @@
     clipped
     fixed
     app
+    disable-resize-watcher
+    :value="visibility"
   >
     <UserInfo :user="user"/>
     <RoomsList :rooms="rooms"/>
@@ -16,6 +18,12 @@ import { dissoc, prop } from 'ramda'
 
 export default {
   name: 'SideBar',
+  props: {
+    visibility: {
+      type: Boolean,
+      required: true
+    }
+  },
   components: {
     UserInfo,
     RoomsList
