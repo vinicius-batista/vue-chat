@@ -1,31 +1,12 @@
 import { setContext } from 'apollo-link-context'
 import localforage from 'localforage'
-import { assocPath, pipe, prop } from 'ramda'
-import jwtdecode from 'jwt-decode'
-import { isExpired } from '@/helpers/isExpired'
+import { checkTokenExpired } from '@/helpers/checkTokenExpired'
 import { graphqlRequest } from '@/helpers/request'
 import { getData } from '@/helpers/getData'
-
-const newAccessTokenQuery = `
-query ($refreshToken:String!) {
-  newAccessToken(refreshToken:$refreshToken) {
-    accessToken
-  }
-}`
+import newAccessTokenQuery from './newAccessTokenQuery'
+import { authHeader } from '@/helpers/authHeader'
 
 let accessToken = null
-
-const authHeader = (request, token) => assocPath(
-  ['headers', 'authorization'],
-  `Bearer ${token}`,
-  request
-)
-
-const checkTokenExpired = pipe(
-  jwtdecode,
-  prop('exp'),
-  isExpired
-)
 
 const newAccessToken = (request) =>
   localforage.getItem('refreshToken')
