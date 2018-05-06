@@ -1,5 +1,4 @@
 import { setContext } from 'apollo-link-context'
-import localforage from 'localforage'
 import { checkTokenExpired } from '@/helpers/checkTokenExpired'
 import { graphqlRequest } from '@/helpers/request'
 import { getData } from '@/helpers/getData'
@@ -8,10 +7,9 @@ import { authHeader } from '@/helpers/authHeader'
 import store from '../store'
 
 const newAccessToken = (request) =>
-  localforage.getItem('refreshToken')
-    .then(refreshToken =>
-      graphqlRequest(newAccessTokenQuery, { refreshToken })
-    )
+  store
+    .refreshToken()
+    .then(refreshToken => graphqlRequest(newAccessTokenQuery, { refreshToken }))
     .then(getData('newAccessToken'))
     .then(data => {
       store.setAccessToken(data.accessToken)
@@ -23,7 +21,7 @@ export const withAuthToken = setContext((request) => {
   return store
     .accessToken()
     .then(accessToken => {
-      if (!checkTokenExpired(accessToken)) {
+      if (accessToken && !checkTokenExpired(accessToken)) {
         return authHeader(request, accessToken)
       }
 
