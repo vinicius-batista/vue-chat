@@ -1,4 +1,5 @@
 import { authRoutes } from './auth'
+import { roomsRoutes } from './rooms'
 import Root from './root'
 
 export default [
@@ -7,6 +8,9 @@ export default [
     path: '/',
     name: 'root',
     component: Root,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
+    children: [
+      ...roomsRoutes
+    ]
   }
 ]
