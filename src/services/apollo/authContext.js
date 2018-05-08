@@ -14,7 +14,7 @@ const newAccessToken = (request) =>
     .then(getData('newAccessToken'))
     .then(prop('accessToken'))
     .then(accessToken => store.setAccessToken(accessToken))
-    .then(accessToken => authHeader(request, accessToken))
+    .then(authHeader(request))
     .catch(() => request)
 
 export const withAuthToken = setContext((request) => {
