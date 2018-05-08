@@ -1,5 +1,7 @@
 import { getData } from '@/helpers/getData'
 import { isNotEmpty } from '@/helpers/isNotEmpty'
+import { isExpired } from '@/helpers/isExpired'
+import { authHeader } from '@/helpers/authHeader'
 
 describe('Helpers tests', () => {
   test('getData test', () => {
@@ -14,9 +16,33 @@ describe('Helpers tests', () => {
   })
 
   test('isNotEmpty test', () => {
-    expect(isNotEmpty('not empty')).toBe(true)
-    expect(isNotEmpty('')).toBe(false)
-    expect(isNotEmpty(['not empty'])).toBe(true)
-    expect(isNotEmpty([])).toBe(false)
+    expect(isNotEmpty('not empty')).toBeTruthy()
+    expect(isNotEmpty('')).toBeFalsy()
+    expect(isNotEmpty(['not empty'])).toBeTruthy()
+    expect(isNotEmpty([])).toBeFalsy()
+  })
+
+  test('isExpired test', () => {
+    const oldDate = new Date('2016-04-04T11:11:11')
+    const furtherDate = new Date('2022-04-04T11:11:11')
+    expect(isExpired(oldDate)).toBeTruthy()
+    expect(isExpired(furtherDate)).toBeFalsy()
+  })
+
+  test('authHeader test', () => {
+    const requestMock = {
+      foo: 'bar',
+      bar: 'foo',
+      headers: {}
+    }
+    const expected = {
+      foo: 'bar',
+      bar: 'foo',
+      headers: {
+        authorization: 'Bearer some-token'
+      }
+    }
+
+    expect(authHeader(requestMock, 'some-token')).toEqual(expected)
   })
 })
