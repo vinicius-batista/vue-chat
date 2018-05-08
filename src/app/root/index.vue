@@ -7,7 +7,7 @@
       row
     >
       <v-flex xs3>
-        <RoomsList :rooms="rooms"/>
+        <RoomsList :rooms="[]"/>
       </v-flex>
       <v-flex xs9>
          <router-view class="fit-on-screen"></router-view>
@@ -20,7 +20,6 @@
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
 import RoomsList from '../rooms/components/RoomsList'
-import { dissoc, prop } from 'ramda'
 
 export default {
   name: 'Root',
@@ -30,28 +29,11 @@ export default {
     RoomsList
   },
   data: () => ({
-    sideBarVisibility: true,
-    user: {
-      id: '',
-      name: '',
-      username: '',
-      email: ''
-    },
-    rooms: []
+    sideBarVisibility: true
   }),
   methods: {
     changeSideBarVisibility () {
       this.sideBarVisibility = !this.sideBarVisibility
-    }
-  },
-  apollo: {
-    profile: {
-      query: require('./graphql/profile.gql'),
-      manual: true,
-      result ({ data: { profile } }) {
-        this.user = dissoc('rooms', profile)
-        this.rooms = prop('rooms', profile)
-      }
     }
   }
 }

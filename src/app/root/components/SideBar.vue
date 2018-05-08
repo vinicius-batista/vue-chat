@@ -8,36 +8,32 @@
   >
     <UserInfo :user="user"/>
     <v-list class="pt-0">
-      <v-list-tile
+      <MyRoomsList :rooms="rooms" />
+      <SideBarListItem
         v-for="item in items"
+        :item="item"
         :key="item.title"
-      >
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 import UserInfo from './UserInfo'
+import SideBarListItem from './SideBarListItem'
+import MyRoomsList from '@/app/rooms/components/MyRoomsList'
+import { dissoc, prop } from 'ramda'
 
 export default {
   name: 'SideBar',
   components: {
-    UserInfo
+    UserInfo,
+    SideBarListItem,
+    MyRoomsList
   },
   props: {
     visibility: {
       type: Boolean,
-      required: true
-    },
-    user: {
-      type: Object,
       required: true
     }
   },
@@ -47,7 +43,24 @@ export default {
       { icon: 'account_circle', title: 'Profile' },
       { icon: 'settings', title: 'Settings' },
       { icon: 'exit_to_app', title: 'Logout' }
-    ]
-  })
+    ],
+    user: {
+      id: '',
+      name: '',
+      username: '',
+      email: ''
+    },
+    rooms: []
+  }),
+  apollo: {
+    profile: {
+      query: require('../graphql/profile.gql'),
+      manual: true,
+      result ({ data: { profile } }) {
+        this.user = dissoc('rooms', profile)
+        this.rooms = prop('rooms', profile)
+      }
+    }
+  }
 }
 </script>
