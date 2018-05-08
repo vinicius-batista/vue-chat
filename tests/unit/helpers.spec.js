@@ -23,8 +23,8 @@ describe('Helpers tests', () => {
   })
 
   test('isExpired test', () => {
-    const oldDate = new Date('2016-04-04T11:11:11')
-    const furtherDate = new Date('2022-04-04T11:11:11')
+    const oldDate = '1450786210'
+    const furtherDate = '1580674802'
     expect(isExpired(oldDate)).toBeTruthy()
     expect(isExpired(furtherDate)).toBeFalsy()
   })
