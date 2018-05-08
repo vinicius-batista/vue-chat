@@ -21,7 +21,7 @@ import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
 import RoomsList from './components/RoomsList'
 import { dissoc, prop } from 'ramda'
-// refatorar para deixar barra lateral e menu de rooms separados. utilizar grid para deixar a room ali no cantinho
+
 export default {
   name: 'Root',
   components: {
