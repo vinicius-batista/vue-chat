@@ -19,7 +19,7 @@
 <script>
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
-import RoomsList from './components/RoomsList'
+import RoomsList from '../rooms/components/RoomsList'
 import { dissoc, prop } from 'ramda'
 
 export default {
