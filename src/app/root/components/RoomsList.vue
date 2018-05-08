@@ -1,5 +1,6 @@
 <template functional>
-  <v-list dense two-line>
+  <v-list dense two-line class="overflow fit-on-screen">
+    <v-subheader>ROOMS</v-subheader>
     <v-list-tile
       class="pt-2"
       v-for="room in props.rooms"
@@ -28,3 +29,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.overflow {
+  overflow-y: scroll;
+}
+</style>
