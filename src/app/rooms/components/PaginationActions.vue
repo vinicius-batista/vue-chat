@@ -5,11 +5,11 @@
       @click="listeners.showMore"
       flat
       block
-      color="teal lighten-2"
+      color="primary"
     >
       Show More
     </v-btn>
-    <p v-else class="body-2 text-xs-center teal--text lighten-2">
+    <p v-else class="body-2 text-xs-center primary--text">
       No more results
     </p>
   </v-container>

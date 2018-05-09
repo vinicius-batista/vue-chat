@@ -1,7 +1,7 @@
 <template>
   <div class="overflow fit-on-screen">
     <div class="rooms-search">
-      <v-subheader class="search-title">ROOMS</v-subheader>
+      <v-subheader class="search-title white--text">ROOMS</v-subheader>
       <v-spacer />
       <v-text-field
         placeholder="Search"
