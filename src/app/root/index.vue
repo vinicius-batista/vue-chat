@@ -1,16 +1,16 @@
 <template>
   <div>
     <NavBar @changeSideBarVisibility="changeSideBarVisibility"/>
-    <SideBar :visibility="sideBarVisibility" :user="user"/>
+    <SideBar :visibility="sideBarVisibility"/>
     <v-layout
       class="fit-on-screen"
       row
     >
       <v-flex xs3>
-        <RoomsList :rooms="[]"/>
+        <RoomsSearch />
       </v-flex>
       <v-flex xs9>
-         <router-view class="fit-on-screen"></router-view>
+         <router-view></router-view>
       </v-flex>
     </v-layout>
   </div>
@@ -19,14 +19,14 @@
 <script>
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
-import RoomsList from '../rooms/components/RoomsList'
+import RoomsSearch from '../rooms/components/RoomsSearch'
 
 export default {
   name: 'Root',
   components: {
     NavBar,
     SideBar,
-    RoomsList
+    RoomsSearch
   },
   data: () => ({
     sideBarVisibility: true

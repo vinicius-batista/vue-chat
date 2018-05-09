@@ -1,0 +1,8 @@
+query($name:String!, $cursor:String) {
+  rooms(name: $name, cursor: $cursor) {
+    id,
+    description,
+    insertedAt,
+    name
+  }
+}
