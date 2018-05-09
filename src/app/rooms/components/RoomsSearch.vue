@@ -16,22 +16,61 @@
         :room="room"
       />
     </v-list>
+    <PaginationActions
+      :hasMore="hasMore"
+      @showMore="showMore"
+    />
   </div>
 </template>
 
 <script>
 import RoomsListItem from './RoomsListItem'
+import PaginationActions from './PaginationActions'
+import { last, concat } from 'ramda'
+import { isArraySizeDivisor } from '@/helpers/isArraySizeDivisor'
 
 export default {
   name: 'RoomsSearch',
   components: {
-    RoomsListItem
+    RoomsListItem,
+    PaginationActions
   },
   data: () => ({
     rooms: [],
-    search: '',
-    cursor: ''
+    search: ''
   }),
+  computed: {
+    cursor () {
+      const lastRoom = last(this.rooms)
+      return lastRoom.insertedAt
+    },
+    hasMore () {
+      return isArraySizeDivisor(this.rooms, 20)
+    }
+  },
+  methods: {
+    showMore () {
+      return this
+        .$apollo
+        .queries
+        .rooms
+        .fetchMore({
+          variables: {
+            name: this.search,
+            cursor: this.cursor
+          },
+          updateQuery: this.updateQuery
+        })
+    },
+    updateQuery (previous, { fetchMoreResult }) {
+      const newRooms = fetchMoreResult.rooms
+
+      return {
+        __typename: previous.rooms.__typename,
+        rooms: concat(previous.rooms, newRooms)
+      }
+    }
+  },
   apollo: {
     rooms: {
       query: require('../graphql/rooms.gql'),
