@@ -31,6 +31,7 @@ import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
 import { rules } from '@/support/mixins/rules'
 import { handleErrors } from '@/support/mixins/handleErrors'
+import RegisterUserMutation from '../graphql/registerUser.gql'
 
 export default {
   name: 'Register',
@@ -79,7 +80,7 @@ export default {
     handleSubmit () {
       if (this.valid) {
         return this.$apollo.mutate({
-          mutation: require('../graphql/RegisterUser.gql'),
+          mutation: RegisterUserMutation,
           variables: {
             input: this.input
           }

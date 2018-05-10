@@ -24,6 +24,7 @@ import UserInfo from './UserInfo'
 import SideBarListItem from './SideBarListItem'
 import MyRoomsList from '@/app/rooms/components/MyRoomsList'
 import LogoutModal from '@/app/auth/components/LogoutModal'
+import ProfileQuery from '../graphql/profile.gql'
 import { dissoc, prop } from 'ramda'
 
 export default {
@@ -56,7 +57,7 @@ export default {
   }),
   apollo: {
     profile: {
-      query: require('../graphql/profile.gql'),
+      query: ProfileQuery,
       manual: true,
       result ({ data: { profile } }) {
         this.user = dissoc('rooms', profile)

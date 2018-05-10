@@ -33,6 +33,7 @@ import { rules } from '@/support/mixins/rules'
 import { handleErrors } from '@/support/mixins/handleErrors'
 import { getData } from '@/helpers/getData'
 import { setTokens } from '@/helpers/setTokens'
+import LoginUserMutation from '../graphql/loginUser.gql'
 
 export default {
   name: 'Login',
@@ -68,7 +69,7 @@ export default {
   methods: {
     handleSubmit () {
       return this.$apollo.mutate({
-        mutation: require('../graphql/LoginUser.gql'),
+        mutation: LoginUserMutation,
         variables: {
           input: this.input
         }

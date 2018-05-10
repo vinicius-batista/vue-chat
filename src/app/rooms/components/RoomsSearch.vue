@@ -27,6 +27,7 @@ import RoomsListItem from './RoomsListItem'
 import PaginationActions from './PaginationActions'
 import { last, concat } from 'ramda'
 import { isArraySizeDivisor } from '@/helpers/isArraySizeDivisor'
+import RoomsQuery from '../graphql/rooms.gql'
 
 export default {
   name: 'RoomsSearch',
@@ -72,7 +73,7 @@ export default {
   },
   apollo: {
     rooms: {
-      query: require('../graphql/rooms.gql'),
+      query: RoomsQuery,
       variables () {
         return {
           name: this.search
