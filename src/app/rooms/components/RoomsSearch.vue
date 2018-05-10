@@ -1,8 +1,7 @@
 <template>
   <div class="overflow fit-on-screen">
     <div class="rooms-search">
-      <v-subheader class="search-title white--text">ROOMS</v-subheader>
-      <v-spacer />
+      <v-subheader class="mt-3 mr-5 white--text">ROOMS</v-subheader>
       <v-text-field
         placeholder="Search"
         append-icon="search"
@@ -96,9 +95,5 @@ export default {
   display: flex;
   padding: 1em;
   align-items: center;
-
-  .search-title {
-    margin-top: 1em;
-  }
 }
 </style>
