@@ -32,7 +32,7 @@ import FormActions from '../components/FormActions'
 import { rules } from '@/support/mixins/rules'
 import { handleErrors } from '@/support/mixins/handleErrors'
 import { getData } from '@/helpers/getData'
-import store from '@/services/store'
+import { setTokens } from '@/helpers/setTokens'
 
 export default {
   name: 'Login',
@@ -74,7 +74,7 @@ export default {
         }
       })
         .then(getData('loginUser'))
-        .then(this.setTokens)
+        .then(setTokens)
         .then(this.pushToRoot)
         .catch(this.handleError)
     },
@@ -83,12 +83,6 @@ export default {
     },
     pushToRoot () {
       return this.$router.push({ name: 'root' })
-    },
-    setTokens ({ accessToken, refreshToken }) {
-      return Promise.all([
-        store.setAccessToken(accessToken),
-        store.setRefreshToken(refreshToken)
-      ])
     }
   }
 }
