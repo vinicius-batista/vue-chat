@@ -1,5 +1,5 @@
 <template functional>
-  <v-list-tile>
+  <v-list-tile @click="">
     <v-list-tile-action>
       <v-icon>{{ props.item.icon }}</v-icon>
     </v-list-tile-action>

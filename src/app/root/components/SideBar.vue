@@ -14,6 +14,7 @@
         :item="item"
         :key="item.title"
       />
+      <LogoutModal />
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -22,6 +23,7 @@
 import UserInfo from './UserInfo'
 import SideBarListItem from './SideBarListItem'
 import MyRoomsList from '@/app/rooms/components/MyRoomsList'
+import LogoutModal from '@/app/auth/components/LogoutModal'
 import { dissoc, prop } from 'ramda'
 
 export default {
@@ -29,7 +31,8 @@ export default {
   components: {
     UserInfo,
     SideBarListItem,
-    MyRoomsList
+    MyRoomsList,
+    LogoutModal
   },
   props: {
     visibility: {
@@ -41,8 +44,7 @@ export default {
     items: [
       { icon: 'add', title: 'New Room' },
       { icon: 'account_circle', title: 'Profile' },
-      { icon: 'settings', title: 'Settings' },
-      { icon: 'exit_to_app', title: 'Logout' }
+      { icon: 'settings', title: 'Settings' }
     ],
     user: {
       id: '',
