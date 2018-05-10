@@ -33,19 +33,19 @@ export default {
     logout () {
       return store
         .refreshToken()
-        .then(refreshToken => {
-          return this.$apollo.mutate({
-            mutation: LogoutMutation,
-            variables: { refreshToken }
-          })
-        })
-        .then(() => {
-          return setTokens({ accessToken: null, refreshToken: null })
-        })
-        .then(() => {
-          this.closeDialog()
-          this.$router.push({ name: 'auth.login' })
-        })
+        .then(this.sendLogout)
+        .then(() => setTokens({ accessToken: null, refreshToken: null }))
+        .then(this.redirectsUser)
+    },
+    sendLogout (refreshToken) {
+      return this.$apollo.mutate({
+        mutation: LogoutMutation,
+        variables: { refreshToken }
+      })
+    },
+    redirectsUser () {
+      this.closeDialog()
+      this.$router.push({ name: 'auth.login' })
     }
   }
 }
