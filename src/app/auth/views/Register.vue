@@ -1,7 +1,7 @@
 <template>
  <FormLayout>
     <FormBox :title="'Register'">
-      <v-form v-model="valid">
+      <v-form v-model="valid" @submit.prevent="handleSubmit">
         <v-alert type="error" v-model="hasError">
           {{ errorMessage }}
         </v-alert>
@@ -13,14 +13,14 @@
           :prepend-icon="icon"
           :rules="rules[model]"
         />
+        <FormActions
+          :buttonText="'Register'"
+          :buttonDisable="!valid"
+          :subText="`Already have an account? Login!`"
+          @buttonClick="handleSubmit"
+          @subClick="pushToLogin"
+        />
       </v-form>
-      <FormActions
-        :buttonText="'Register'"
-        :buttonDisable="!valid"
-        :subText="`Already have an account? Login!`"
-        @buttonClick="handleSubmit"
-        @subClick="pushToLogin"
-      />
     </FormBox>
  </FormLayout>
 </template>

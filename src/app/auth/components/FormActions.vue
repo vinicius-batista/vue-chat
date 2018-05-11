@@ -2,11 +2,11 @@
   <v-layout justify-center align-center row wrap>
     <v-flex xs8 md6 class="mt-4">
       <v-btn
+        type="submit"
         block
         color="teal"
         large
         :disabled="props.buttonDisable"
-        @click.prevent="listeners.buttonClick"
       >
         <span class="mx-2">{{ props.buttonText }}</span>
         <v-icon small >send</v-icon>
