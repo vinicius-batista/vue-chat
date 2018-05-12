@@ -65,7 +65,7 @@ export default {
           update: this.updateStore
         })
         .then(this.closeDialog)
-        .catch(this.handleErrors)
+        .catch(this.handleError)
     },
     updateStore (store, { data: { createRoom } }) {
       const { profile } = store.readQuery({ query: profileQuery })
