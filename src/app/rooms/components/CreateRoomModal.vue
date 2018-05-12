@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="isDialogOpen" full-width max-width="500">
-    <SideBarListItem slot="activator" :item="{ icon: 'add', title: 'New Room' }"/>
+    <SideBarListItem slot="activator" :icon="'add'" :title="'New Room'" />
     <v-card class="pa-3">
       <v-form v-model="valid" @submit.prevent="handleSubmit">
         <v-card-title class="headline">New Room</v-card-title>

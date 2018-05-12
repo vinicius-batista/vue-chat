@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="isDialogOpen" full-width max-width="500">
-    <SideBarListItem slot="activator" :item="{ icon: 'account_circle', title: 'Profile' }"/>
+    <SideBarListItem slot="activator" :icon="'account_circle'" :title="'Profile'"/>
     <v-card class="pa-3">
       <v-form v-model="valid" @submit.prevent="handleSubmit">
         <v-card-title class="headline">Update Profile</v-card-title>

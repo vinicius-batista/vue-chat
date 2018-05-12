@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="isDialogOpen" full-width max-width="500">
-    <SideBarListItem slot="activator" :item="{ icon: 'settings', title: 'Settings' }"/>
+    <SideBarListItem slot="activator" :icon="'settings'" :title="'Settings'"/>
   </v-dialog>
 </template>
 

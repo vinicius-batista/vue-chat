@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="isDialogOpen" full-width max-width="300">
-    <SideBarListItem slot="activator" :item="{ title: 'Logout', icon: 'exit_to_app'}"/>
+    <SideBarListItem slot="activator" :icon="'exit_to_app'" :title="'Logout'"/>
     <v-card class="pa-3">
       <v-card-title class="headline">Are you sure?</v-card-title>
       <v-card-text>Do you really want to logout?</v-card-text>
