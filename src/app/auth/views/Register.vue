@@ -17,7 +17,6 @@
           :buttonText="'Register'"
           :buttonDisable="!valid"
           :subText="`Already have an account? Login!`"
-          @buttonClick="handleSubmit"
           @subClick="pushToLogin"
         />
       </v-form>

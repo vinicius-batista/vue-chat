@@ -13,23 +13,15 @@
 </template>
 
 <script>
-import SideBarListItem from '@/app/root/components/SideBarListItem'
 import LogoutMutation from '../graphql/logout.gql'
 import { setTokens } from '@/helpers/setTokens'
 import store from '@/services/store'
+import modal from '@/support/mixins/modal'
 
 export default {
   name: 'LogoutModal',
-  components: {
-    SideBarListItem
-  },
-  data: () => ({
-    isDialogOpen: false
-  }),
+  mixins: [modal],
   methods: {
-    closeDialog () {
-      this.isDialogOpen = false
-    },
     logout () {
       return store
         .refreshToken()
