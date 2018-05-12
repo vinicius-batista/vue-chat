@@ -8,6 +8,7 @@ const rulesObject = {
     v => test(emailRegex, v) || 'Invalid email format'
   ],
   name: [v => isNotEmpty(v) || 'Name is required'],
+  description: [v => isNotEmpty(v) || 'Description is required'],
   username: [v => isNotEmpty(v) || 'Username is required'],
   password: [
     v => isNotEmpty(v) || 'Password is required',
@@ -15,7 +16,7 @@ const rulesObject = {
   ]
 }
 
-export const rules = (rules) => ({
+export default (rules) => ({
   data: () => ({
     rules: pickAll(rules, rulesObject)
   })

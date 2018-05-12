@@ -28,8 +28,7 @@
 import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
-import { rules } from '@/support/mixins/rules'
-import { handleErrors } from '@/support/mixins/handleErrors'
+import { rules, handleErrors } from '@/support/mixins/'
 import RegisterUserMutation from '../graphql/registerUser.gql'
 
 export default {

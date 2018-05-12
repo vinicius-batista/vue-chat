@@ -16,7 +16,7 @@
 import LogoutMutation from '../graphql/logout.gql'
 import { setTokens } from '@/helpers/setTokens'
 import store from '@/services/store'
-import modal from '@/support/mixins/modal'
+import { modal } from '@/support/mixins'
 
 export default {
   name: 'LogoutModal',

@@ -1,4 +1,4 @@
-export const handleErrors = {
+export default {
   data: () => ({
     errorMessage: '',
     hasError: false
