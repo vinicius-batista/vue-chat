@@ -1,0 +1,7 @@
+mutation ($input:CreateRoomInput!) {
+  createRoom(input:$input) {
+    id,
+    name,
+    description
+  }
+}
