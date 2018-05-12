@@ -11,11 +11,7 @@
       <MyRoomsList :rooms="rooms" />
       <CreateRoomModal />
       <ProfileModal />
-      <SideBarListItem
-        v-for="item in items"
-        :item="item"
-        :key="item.title"
-      />
+      <SettingsModal />
       <LogoutModal />
     </v-list>
   </v-navigation-drawer>
@@ -28,6 +24,7 @@ import MyRoomsList from '@/app/rooms/components/MyRoomsList'
 import LogoutModal from '@/app/auth/components/LogoutModal'
 import CreateRoomModal from '@/app/rooms/components/CreateRoomModal'
 import ProfileModal from '@/app/user/components/ProfileModal'
+import SettingsModal from '@/app/user/components/SettingsModal'
 import ProfileQuery from '../graphql/profile.gql'
 import { dissoc, prop } from 'ramda'
 
@@ -39,7 +36,8 @@ export default {
     MyRoomsList,
     LogoutModal,
     CreateRoomModal,
-    ProfileModal
+    ProfileModal,
+    SettingsModal
   },
   props: {
     visibility: {
@@ -48,9 +46,6 @@ export default {
     }
   },
   data: () => ({
-    items: [
-      { icon: 'settings', title: 'Settings' }
-    ],
     user: {
       id: '',
       name: '',
