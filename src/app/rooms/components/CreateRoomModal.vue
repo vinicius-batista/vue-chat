@@ -12,18 +12,10 @@
             :rules="rules[model]"
           />
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click.native="closeDialog">Cancel</v-btn>
-          <v-btn
-            color="primary"
-            flat
-            type="submit"
-            :disabled="!valid"
-          >
-            Send
-          </v-btn>
-        </v-card-actions>
+        <FormModalActions
+          :sendDisabled="!valid"
+          @cancelClick="closeDialog"
+        />
       </v-form>
     </v-card>
   </v-dialog>
@@ -34,9 +26,13 @@ import { rules, modal, handleErrors } from '@/support/mixins'
 import createRoomMutation from '../graphql/createRoom.gql'
 import profileQuery from '@/app/root/graphql/profile.gql'
 import { append, assoc } from 'ramda'
+import FormModalActions from '@/components/FormModalActions'
 
 export default {
   name: 'CreateRoomModal',
+  components: {
+    FormModalActions
+  },
   mixins: [
     modal,
     rules(['name', 'description']),
