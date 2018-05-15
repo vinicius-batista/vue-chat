@@ -25,7 +25,7 @@
 <script>
 import RoomsListItem from './RoomsListItem'
 import PaginationActions from './PaginationActions'
-import { last, concat } from 'ramda'
+import { last, concat, length, equals } from 'ramda'
 import { isArraySizeDivisor } from '@/helpers/isArraySizeDivisor'
 import RoomsQuery from '../graphql/rooms.gql'
 
@@ -45,7 +45,9 @@ export default {
       return lastRoom.insertedAt
     },
     hasMore () {
-      return isArraySizeDivisor(this.rooms, 20)
+      return equals(length(this.rooms), 0)
+        ? false
+        : isArraySizeDivisor(this.rooms, 20)
     }
   },
   methods: {
