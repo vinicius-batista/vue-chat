@@ -2,7 +2,7 @@
   <v-dialog v-model="isDialogOpen" full-width max-width="500">
     <SideBarListItem slot="activator" :icon="'add'" :title="'New Room'" />
     <v-card class="pa-3">
-      <v-form v-model="valid" @submit.prevent="handleSubmit">
+      <v-form v-model="valid" @submit.prevent="handleSubmit" ref="form">
         <v-card-title class="headline">New Room</v-card-title>
         <v-card-text>
           <v-text-field v-for="{ label, model } in fields"
@@ -65,6 +65,7 @@ export default {
           update: this.updateStore
         })
         .then(this.closeDialog)
+        .then(this.resetForm)
         .catch(this.handleError)
     },
     updateStore (store, { data: { createRoom } }) {
@@ -74,6 +75,10 @@ export default {
         query: profileQuery,
         data: { profile: assoc('rooms', newRooms, profile) }
       })
+    },
+    resetForm () {
+      this.$refs.form.reset()
+      this.hasError = false
     }
   }
 }
