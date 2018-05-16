@@ -1,7 +1,7 @@
 <template functional>
   <v-list-tile
     class="pt-2"
-    @click=""
+    :to="{ name: 'room', params: { id: props.room.id } }"
   >
     <v-list-tile-avatar>
       <v-icon small>group</v-icon>
