@@ -41,8 +41,8 @@ export default {
 
 <style lang="scss">
 .fit-on-screen {
-  height: calc(100vh - 80px);
-  max-height: calc(100vh - 90px);
+  height: calc(100vh - 70px);
+  max-height: calc(100vh - 70px);
   margin-top: 0;
 }
 </style>

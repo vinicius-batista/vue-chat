@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-content>
-      <v-container>
+      <v-container grid-list-xs>
         <router-view></router-view>
       </v-container>
     </v-content>
