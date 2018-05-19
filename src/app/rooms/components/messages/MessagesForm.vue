@@ -3,6 +3,7 @@
     <v-layout row>
       <v-flex xs11 class="py-0">
       <v-text-field
+        placeholder="Write a message"
         hide-details
         box
         multi-line

@@ -7,3 +7,9 @@
     </v-content>
   </v-app>
 </template>
+
+<style lang="scss">
+ body, html {
+   overflow: hidden;
+ }
+</style>
