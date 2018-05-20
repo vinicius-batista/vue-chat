@@ -1,0 +1,15 @@
+query($id: Int!) {
+  room (id: $id) {
+    id,
+    name,
+    messages {
+      id,
+      insertedAt,
+      text,
+      user {
+        id,
+        username
+      }
+    }
+  }
+}

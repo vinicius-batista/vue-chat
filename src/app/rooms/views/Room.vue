@@ -1,10 +1,10 @@
 <template>
   <v-container grid-list-xs>
-    <RoomToolbar />
+    <RoomToolbar :name="room.name"></RoomToolbar>
     <v-layout>
       <v-flex xs12>
-        <MessagesList>
-          <MessagesListItem v-for="i in 10" :key="i"/>
+        <MessagesList :messages="room.messages">
+          <MessagesListItem slot-scope="{ message }" v-bind="message"/>
         </MessagesList>
       </v-flex>
     </v-layout>
@@ -21,6 +21,7 @@ import RoomToolbar from '../components/RoomToolbar'
 import MessagesForm from '../components/messages/MessagesForm'
 import MessagesList from '../components/messages/MessagesList'
 import MessagesListItem from '../components/messages/MessagesListItem'
+import roomQuery from '../graphql/room.gql'
 
 export default {
   name: 'Room',
@@ -29,6 +30,23 @@ export default {
     MessagesForm,
     MessagesList,
     MessagesListItem
+  },
+  data: () => ({
+    room: {
+      id: '',
+      name: '',
+      messages: []
+    }
+  }),
+  apollo: {
+    room: {
+      query: roomQuery,
+      variables () {
+        return {
+          id: Number(this.$route.params.id)
+        }
+      }
+    }
   }
 }
 </script>

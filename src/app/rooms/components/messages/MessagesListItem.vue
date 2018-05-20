@@ -2,10 +2,10 @@
   <v-layout class="received pa-4">
     <v-flex xs4>
       <v-card class="message grey darken-3">
-        <v-card-title class="pt-2 pb-0 body-1">User name</v-card-title>
+        <v-card-title class="pt-2 pb-0 body-1">{{ username }}</v-card-title>
         <v-card-text class="py-1">
-          <span class="white--text caption">Some message</span>
-          <span class="white--text time">20:56</span>
+          <span class="white--text caption">{{ text }}</span>
+          <span class="white--text time">{{ insertedAt | getTime }}</span>
         </v-card-text>
       </v-card>
     </v-flex>
@@ -14,7 +14,26 @@
 
 <script>
 export default {
-  name: 'MessagesListItem'
+  name: 'MessagesListItem',
+  props: {
+    username: {
+      type: String,
+      required: true
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    insertedAt: {
+      type: String,
+      required: true
+    }
+  },
+  filters: {
+    getTime (date) {
+      return date
+    }
+  }
 }
 </script>
 
