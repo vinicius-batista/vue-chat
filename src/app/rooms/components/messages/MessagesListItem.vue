@@ -2,7 +2,7 @@
   <v-layout class="received pa-4">
     <v-flex xs4>
       <v-card class="message grey darken-3">
-        <v-card-title class="pt-2 pb-0 body-1">{{ username }}</v-card-title>
+        <v-card-title class="pt-2 pb-0 body-1">{{ user.username }}</v-card-title>
         <v-card-text class="py-1">
           <span class="white--text caption">{{ text }}</span>
           <span class="white--text time">{{ insertedAt | getTime }}</span>
@@ -16,8 +16,8 @@
 export default {
   name: 'MessagesListItem',
   props: {
-    username: {
-      type: String,
+    user: {
+      type: Object,
       required: true
     },
     text: {
@@ -40,7 +40,6 @@ export default {
 <style lang="scss" scoped>
 .sent {
   justify-content: flex-end;
-  align-items: flex-end;
   width: 100%;
 
   .message {
@@ -51,7 +50,6 @@ export default {
 
 .received {
   align-content: flex-start;
-  align-items: flex-start;
   width: 100%;
 
   .message {

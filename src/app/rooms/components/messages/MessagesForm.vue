@@ -1,5 +1,5 @@
-<template>
-  <v-form @submit.prevent="">
+<template functional>
+  <v-form @submit.prevent="listeners.submit">
     <v-layout row>
       <v-flex xs11 class="py-0">
       <v-text-field
@@ -10,6 +10,9 @@
         no-resize
         rows="1"
         class="py-0"
+        :value="props.value"
+        @input="listeners.input"
+        @keypress.ctrl.enter="listeners.submit"
       />
     </v-flex>
     <v-flex xs1 class="py-0">
@@ -29,6 +32,12 @@
 
 <script>
 export default {
-  name: 'MessagesForm'
+  name: 'MessagesForm',
+  props: {
+    value: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>

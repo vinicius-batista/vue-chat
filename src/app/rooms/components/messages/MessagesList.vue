@@ -1,25 +1,19 @@
 <template>
   <v-list class="messages-list grey darken-4">
-    <div
-      v-for="message in messages"
-      :key="message.id"
-    >
-      <slot :message="message"></slot>
-    </div>
+    <slot></slot>
   </v-list>
 </template>
 
 <script>
 export default {
   name: 'MessagesList',
-  props: {
-    messages: {
-      type: Array,
-      required: true
-    }
-  },
   mounted () {
-    this.$el.scrollTop = this.$el.scrollHeight
+    this.setScrollMax()
+  },
+  methods: {
+    setScrollMax () {
+      this.$el.scrollTop = this.$el.scrollHeight
+    }
   }
 }
 </script>
