@@ -62,7 +62,6 @@ export default {
         })
         .then(() => {
           this.text = ''
-          this.$refs.messagesList.setScrollMax()
         })
     },
     updateMessages (store, { data: { createMessage } }) {
