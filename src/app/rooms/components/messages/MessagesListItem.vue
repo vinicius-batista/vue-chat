@@ -13,6 +13,9 @@
 </template>
 
 <script>
+import { isToday } from '@/helpers/isToday'
+import moment from 'moment'
+
 export default {
   name: 'MessagesListItem',
   props: {
@@ -31,7 +34,10 @@ export default {
   },
   filters: {
     getTime (date) {
-      return date
+      const dateMoment = moment(date)
+      return isToday(dateMoment)
+        ? dateMoment.format('hh:mm')
+        : dateMoment.format('MMM D, hh:mm')
     }
   }
 }
