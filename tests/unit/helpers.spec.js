@@ -3,6 +3,7 @@ import { isNotEmpty } from '@/helpers/isNotEmpty'
 import { isExpired } from '@/helpers/isExpired'
 import { authHeader } from '@/helpers/authHeader'
 import { isArraySizeDivisor } from '@/helpers/isArraySizeDivisor'
+import { isToday } from '@/helpers/isToday'
 
 describe('Helpers tests', () => {
   test('getData test', () => {
@@ -51,5 +52,10 @@ describe('Helpers tests', () => {
     const array = [1, 2, 3]
     expect(isArraySizeDivisor(array, 3)).toBeTruthy()
     expect(isArraySizeDivisor(array, 2)).toBeFalsy()
+  })
+
+  test('isToday test', () => {
+    expect(isToday(new Date())).toBeTruthy()
+    expect(isToday(new Date('2017-12-12'))).toBeFalsy()
   })
 })
