@@ -8,6 +8,7 @@
             v-for="message in room.messages"
             :key="message.id"
             v-bind="message"
+            :current-user-id="profile.id"
             @hook:mounted="$refs.messagesList.setScrollMax()"
           />
         </MessagesList>
@@ -27,6 +28,7 @@ import MessagesForm from '../components/messages/MessagesForm'
 import MessagesList from '../components/messages/MessagesList'
 import MessagesListItem from '../components/messages/MessagesListItem'
 import { createMessageMutation, roomQuery } from '@/domains/rooms/graphql'
+import { profileQuery } from '@/domains/user/graphql'
 import { prepend, assoc, reverse } from 'ramda'
 
 export default {
@@ -38,6 +40,9 @@ export default {
     MessagesListItem
   },
   data: () => ({
+    profile: {
+      id: ''
+    },
     room: {
       id: '',
       name: '',
@@ -45,11 +50,16 @@ export default {
     },
     text: ''
   }),
+  computed: {
+    roomId () {
+      return Number(this.$route.params.id)
+    }
+  },
   methods: {
     handleSubmit () {
       const input = {
         text: this.text,
-        roomId: Number(this.$route.params.id)
+        roomId: this.roomId
       }
 
       return this
@@ -66,14 +76,14 @@ export default {
     updateMessages (store, { data: { createMessage } }) {
       const { room } = store.readQuery({
         query: roomQuery,
-        variables: { id: Number(this.$route.params.id) }
+        variables: { id: this.roomId }
       })
 
       const newMessages = prepend(createMessage, room.messages)
 
       store.writeQuery({
         query: roomQuery,
-        variables: { id: Number(this.$route.params.id) },
+        variables: { id: this.roomId },
         data: { room: assoc('messages', newMessages, room) }
       })
     }
@@ -87,9 +97,12 @@ export default {
       },
       variables () {
         return {
-          id: Number(this.$route.params.id)
+          id: this.roomId
         }
       }
+    },
+    profile: {
+      query: profileQuery
     }
   }
 }

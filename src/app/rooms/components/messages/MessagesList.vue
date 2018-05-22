@@ -1,7 +1,7 @@
 <template>
-  <v-list class="messages-list grey darken-4">
+  <v-container class="messages-list grey darken-4">
     <slot></slot>
-  </v-list>
+  </v-container>
 </template>
 
 <script>
@@ -22,10 +22,7 @@ export default {
 .messages-list {
   min-height: calc(100vh - 220px);
   height: calc(100vh - 220px);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 </style>

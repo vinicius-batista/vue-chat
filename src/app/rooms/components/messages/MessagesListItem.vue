@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="received pa-4">
+  <v-layout class="pa-4" :class="isSent()">
     <v-flex xs4>
       <v-card class="message grey darken-3">
         <v-card-title class="pt-2 pb-0 body-1">{{ user.username }}</v-card-title>
@@ -15,6 +15,7 @@
 <script>
 import { isToday } from '@/helpers/isToday'
 import moment from 'moment'
+import { equals } from 'ramda'
 
 export default {
   name: 'MessagesListItem',
@@ -30,6 +31,22 @@ export default {
     insertedAt: {
       type: String,
       required: true
+    },
+    currentUserId: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    isSent () {
+      const isSameId = equals(
+        this.user.id,
+        this.currentUserId
+      )
+      return {
+        sent: isSameId,
+        received: !isSameId
+      }
     }
   },
   filters: {
@@ -55,7 +72,7 @@ export default {
 }
 
 .received {
-  align-content: flex-start;
+  justify-content: flex-start;
   width: 100%;
 
   .message {
