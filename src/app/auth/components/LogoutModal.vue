@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import LogoutMutation from '../graphql/logout.gql'
+import { logoutMutation } from '@/domains/auth/graphql'
 import { setTokens } from '@/helpers/setTokens'
 import store from '@/services/store'
 import { modal } from '@/support/mixins'
@@ -31,7 +31,7 @@ export default {
     },
     sendLogout (refreshToken) {
       return this.$apollo.mutate({
-        mutation: LogoutMutation,
+        mutation: logoutMutation,
         variables: { refreshToken }
       })
     },

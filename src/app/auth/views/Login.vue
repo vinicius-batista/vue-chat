@@ -31,7 +31,7 @@ import FormActions from '../components/FormActions'
 import { rules, handleErrors } from '@/support/mixins'
 import { getData } from '@/helpers/getData'
 import { setTokens } from '@/helpers/setTokens'
-import LoginUserMutation from '../graphql/loginUser.gql'
+import { loginUserMutation } from '@/domains/auth/graphql'
 
 export default {
   name: 'Login',
@@ -67,7 +67,7 @@ export default {
   methods: {
     handleSubmit () {
       return this.$apollo.mutate({
-        mutation: LoginUserMutation,
+        mutation: loginUserMutation,
         variables: {
           input: this.input
         }

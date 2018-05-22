@@ -23,8 +23,8 @@
 
 <script>
 import { rules, modal, handleErrors } from '@/support/mixins'
-import createRoomMutation from '../graphql/createRoom.gql'
-import profileQuery from '@/app/root/graphql/profile.gql'
+import { createRoomMutation } from '@/domains/rooms/graphql'
+import { profileQuery } from '@/domains/user/graphql'
 import { append, assoc } from 'ramda'
 import FormModalActions from '@/components/FormModalActions'
 

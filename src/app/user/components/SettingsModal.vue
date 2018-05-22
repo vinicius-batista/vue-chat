@@ -28,7 +28,7 @@
 <script>
 import { modal, rules, handleErrors } from '@/support/mixins'
 import FormModalActions from '@/components/FormModalActions'
-import changePasswordMutation from '../graphql/changePassword.gql'
+import { changePasswordMutation } from '@/domains/user/graphql'
 
 export default {
   name: 'SettingsModal',

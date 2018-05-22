@@ -26,8 +26,7 @@ import RoomToolbar from '../components/RoomToolbar'
 import MessagesForm from '../components/messages/MessagesForm'
 import MessagesList from '../components/messages/MessagesList'
 import MessagesListItem from '../components/messages/MessagesListItem'
-import roomQuery from '../graphql/room.gql'
-import createMessageMutation from '../graphql/createMessage.gql'
+import { createMessageMutation, roomQuery } from '@/domains/rooms/graphql'
 import { prepend, assoc, reverse } from 'ramda'
 
 export default {

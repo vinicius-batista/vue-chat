@@ -27,8 +27,7 @@
 <script>
 import { rules, modal, handleErrors } from '@/support/mixins'
 import FormModalActions from '@/components/FormModalActions'
-import updateProfileMutation from '../graphql/updateProfile.gql'
-import profileQuery from '@/app/root/graphql/profile.gql'
+import { updateProfileMutation, profileQuery } from '@/domains/user/graphql'
 import { merge } from 'ramda'
 
 export default {
