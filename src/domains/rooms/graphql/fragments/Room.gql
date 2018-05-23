@@ -1,0 +1,6 @@
+fragment Room on Room {
+  id,
+  name,
+  insertedAt,
+  description
+}

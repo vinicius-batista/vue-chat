@@ -1,0 +1,13 @@
+#import '../../../user/graphql/fragments/User.gql'
+
+fragment Message on Message {
+  id,
+  insertedAt,
+  text,
+  user {
+    ... on User {
+      id,
+      username
+    }
+  }
+}

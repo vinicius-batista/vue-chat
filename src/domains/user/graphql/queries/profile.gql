@@ -1,13 +1,15 @@
+#import '../../../rooms/graphql/fragments/Room.gql'
+#import '../fragments/User.gql'
+
 query {
   profile {
-    id,
-    name,
-    email,
-    username,
+    ... User,
     rooms {
-      id,
-      description,
-      name
+      ... on Room {
+        id,
+        name,
+        description
+      }
     }
   }
 }

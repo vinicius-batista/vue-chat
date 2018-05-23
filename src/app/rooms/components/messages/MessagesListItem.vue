@@ -33,7 +33,7 @@ export default {
       required: true
     },
     currentUserId: {
-      type: Number,
+      type: String,
       required: true
     }
   },

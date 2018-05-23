@@ -1,15 +1,14 @@
+#import '../fragments/Message.gql'
+#import '../fragments/Room.gql'
+
 query($id: Int!) {
   room (id: $id) {
-    id,
-    name,
-    messages {
+    ... on Room {
       id,
-      insertedAt,
-      text,
-      user {
-        id,
-        username
-      }
+      name
+    }
+    messages {
+      ...Message
     }
   }
 }

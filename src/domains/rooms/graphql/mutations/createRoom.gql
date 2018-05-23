@@ -1,7 +1,7 @@
+#import '../fragments/Room.gql'
+
 mutation ($input:CreateRoomInput!) {
   createRoom(input:$input) {
-    id,
-    name,
-    description
+    ...Room
   }
 }
