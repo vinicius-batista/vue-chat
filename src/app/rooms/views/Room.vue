@@ -27,7 +27,11 @@ import RoomToolbar from '../components/RoomToolbar'
 import MessagesForm from '../components/messages/MessagesForm'
 import MessagesList from '../components/messages/MessagesList'
 import MessagesListItem from '../components/messages/MessagesListItem'
-import { createMessageMutation, roomQuery } from '@/domains/rooms/graphql'
+import {
+  createMessageMutation,
+  roomQuery,
+  messageAddedSubscription
+} from '@/domains/rooms/graphql'
 import { profileQuery } from '@/domains/user/graphql'
 import { prepend, assoc, reverse } from 'ramda'
 
@@ -66,26 +70,11 @@ export default {
         .$apollo
         .mutate({
           mutation: createMessageMutation,
-          variables: { input },
-          update: this.updateMessages
+          variables: { input }
         })
         .then(() => {
           this.text = ''
         })
-    },
-    updateMessages (store, { data: { createMessage } }) {
-      const { room } = store.readQuery({
-        query: roomQuery,
-        variables: { id: this.roomId }
-      })
-
-      const newMessages = prepend(createMessage, room.messages)
-
-      store.writeQuery({
-        query: roomQuery,
-        variables: { id: this.roomId },
-        data: { room: assoc('messages', newMessages, room) }
-      })
     }
   },
   apollo: {
@@ -98,6 +87,17 @@ export default {
       variables () {
         return {
           id: this.roomId
+        }
+      },
+      subscribeToMore: {
+        document: messageAddedSubscription,
+        variables () {
+          return { roomId: this.roomId }
+        },
+        updateQuery: ({ room }, { subscriptionData }) => {
+          const message = subscriptionData.data.messageAdded
+          const newMessages = prepend(message, room.messages)
+          return { room: assoc('messages', newMessages, room) }
         }
       }
     },

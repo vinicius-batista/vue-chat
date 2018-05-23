@@ -1,0 +1,7 @@
+#import '../fragments/Message.gql'
+
+subscription ($roomId: Int!) {
+  messageAdded (roomId: $roomId) {
+    ...Message
+  }
+}
