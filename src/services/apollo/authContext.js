@@ -24,7 +24,7 @@ export const withAuthToken = setContext((request) => {
       if (!accessToken) {
         return request
       }
-      
+
       if (accessToken && !checkTokenExpired(accessToken)) {
         return authHeader(request, accessToken)
       }
