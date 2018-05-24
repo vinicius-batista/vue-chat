@@ -8,20 +8,21 @@ import { hasSubscription } from '@jumpn/utils-graphql'
 
 export const createApolloClient = ({ httpEndpoint, socketEndpoint }) => {
   const httpLink = createHttpLink(httpEndpoint)
-
-  const httpAuthLink = ApolloLink.from([
-    withAuthToken,
-    httpLink
-  ])
+  const wsLink = createSocketLink(socketEndpoint)
 
   const link = ApolloLink.split(
     operation => hasSubscription(operation.query),
-    createSocketLink(socketEndpoint),
-    httpAuthLink
+    wsLink,
+    httpLink
   )
 
+  const authLink = ApolloLink.from([
+    withAuthToken,
+    link
+  ])
+
   return new ApolloClient({
-    link: link,
+    link: authLink,
     cache: new InMemoryCache()
   })
 }
