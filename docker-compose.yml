@@ -1,0 +1,23 @@
+version: '3.6'
+
+services:
+  # dev server with live-reload
+  dev:
+    container_name: vue-chat-dev
+    build: .
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    ports:
+      - "8080:8080"
+    command: npm run serve
+
+  # NGINX preview of 'npm run build' contents
+  preview:
+    image: nginx:stable-alpine
+    container_name: vue-chat-preview
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - 9000:80
