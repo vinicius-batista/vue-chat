@@ -2,9 +2,7 @@
   <FormLayout>
     <FormBox :title="'Login'">
       <v-form v-model="valid" @submit.prevent="handleSubmit">
-        <v-alert type="error" v-model="hasError">
-          {{ errorMessage }}
-        </v-alert>
+        <FormErrorMessage ref="formErrorMessage" />
         <v-text-field v-for="{ label, model, icon, type } in fields"
           :type="type"
           :key="model"
@@ -28,21 +26,22 @@
 import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
-import { rules, handleErrors } from '@/support/mixins'
+import { rules } from '@/support/mixins'
 import { getData } from '@/helpers/getData'
 import { setTokens } from '@/helpers/setTokens'
 import { loginUserMutation } from '@/domains/auth/graphql'
+import { FormErrorMessage } from '@/components'
 
 export default {
   name: 'Login',
   components: {
     FormBox,
     FormLayout,
-    FormActions
+    FormActions,
+    FormErrorMessage
   },
   mixins: [
-    rules(['email', 'password']),
-    handleErrors
+    rules(['email', 'password'])
   ],
   data: () => ({
     valid: false,
@@ -75,7 +74,7 @@ export default {
         .then(getData('loginUser'))
         .then(setTokens)
         .then(this.pushToRoot)
-        .catch(this.handleError)
+        .catch(this.$refs.formErrorMessage.handleError)
     },
     handleSubClick (e) {
       return this.$router.push({ name: 'auth.register' })

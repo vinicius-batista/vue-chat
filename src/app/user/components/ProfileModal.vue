@@ -5,9 +5,7 @@
       <v-form v-model="valid" @submit.prevent="handleSubmit">
         <v-card-title class="headline">Update Profile</v-card-title>
         <v-card-text>
-          <v-alert type="error" v-model="hasError">
-            {{ errorMessage }}
-          </v-alert>
+          <FormErrorMessage ref="formErrorMessage" />
           <v-text-field v-for="{ label, model } in fields"
             :key="model"
             :label="label"
@@ -25,19 +23,19 @@
 </template>
 
 <script>
-import { rules, modal, handleErrors } from '@/support/mixins'
-import FormModalActions from '@/components/FormModalActions'
+import { rules, modal } from '@/support/mixins'
+import { FormModalActions, FormErrorMessage } from '@/components'
 import { updateProfileMutation, profileQuery } from '@/domains/user/graphql'
 import { merge } from 'ramda'
 
 export default {
   name: 'ProfileModal',
   components: {
-    FormModalActions
+    FormModalActions,
+    FormErrorMessage
   },
   mixins: [
     modal,
-    handleErrors,
     rules(['email', 'name', 'username'])
   ],
   data: () => ({
@@ -72,7 +70,7 @@ export default {
           update: this.updateStore
         })
         .then(this.closeDialog)
-        .catch(this.handleError)
+        .catch(this.$refs.formErrorMessage.handleError)
     },
     updateStore (store, { data: updateProfile }) {
       const { profile } = store.readQuery({ query: profileQuery })

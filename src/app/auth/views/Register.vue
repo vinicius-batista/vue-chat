@@ -2,9 +2,7 @@
  <FormLayout>
     <FormBox :title="'Register'">
       <v-form v-model="valid" @submit.prevent="handleSubmit">
-        <v-alert type="error" v-model="hasError">
-          {{ errorMessage }}
-        </v-alert>
+        <FormErrorMessage ref="formErrorMessage" />
         <v-text-field v-for="{ label, model, icon, type } in fields"
           :type="type"
           :key="model"
@@ -28,19 +26,20 @@
 import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
-import { rules, handleErrors } from '@/support/mixins/'
+import { rules } from '@/support/mixins/'
 import { registerUserMutation } from '@/domains/auth/graphql'
+import { FormErrorMessage } from '@/components'
 
 export default {
   name: 'Register',
   components: {
     FormBox,
     FormLayout,
-    FormActions
+    FormActions,
+    FormErrorMessage
   },
   mixins: [
-    rules(['email', 'password', 'name', 'username']),
-    handleErrors
+    rules(['email', 'password', 'name', 'username'])
   ],
   data: () => ({
     input: {
@@ -76,16 +75,14 @@ export default {
   }),
   methods: {
     handleSubmit () {
-      if (this.valid) {
-        return this.$apollo.mutate({
-          mutation: registerUserMutation,
-          variables: {
-            input: this.input
-          }
-        })
-          .then(this.pushToLogin)
-          .catch(this.handleError)
-      }
+      return this.$apollo.mutate({
+        mutation: registerUserMutation,
+        variables: {
+          input: this.input
+        }
+      })
+        .then(this.pushToLogin)
+        .catch(this.$refs.formErrorMessage.handleError)
     },
     pushToLogin () {
       return this.$router.push({ name: 'auth.login' })

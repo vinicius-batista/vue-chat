@@ -5,6 +5,7 @@
       <v-form v-model="valid" @submit.prevent="handleSubmit" ref="form">
         <v-card-title class="headline">New Room</v-card-title>
         <v-card-text>
+          <FormErrorMessage ref="formErrorMessage" />
           <v-text-field v-for="{ label, model } in fields"
             :key="model"
             :label="label"
@@ -22,21 +23,21 @@
 </template>
 
 <script>
-import { rules, modal, handleErrors } from '@/support/mixins'
+import { rules, modal } from '@/support/mixins'
 import { createRoomMutation } from '@/domains/rooms/graphql'
 import { profileQuery } from '@/domains/user/graphql'
 import { append, assoc } from 'ramda'
-import FormModalActions from '@/components/FormModalActions'
+import { FormModalActions, FormErrorMessage } from '@/components'
 
 export default {
   name: 'CreateRoomModal',
   components: {
-    FormModalActions
+    FormModalActions,
+    FormErrorMessage
   },
   mixins: [
     modal,
-    rules(['name', 'description']),
-    handleErrors
+    rules(['name', 'description'])
   ],
   data: () => ({
     valid: false,
@@ -66,7 +67,7 @@ export default {
         })
         .then(this.closeDialog)
         .then(this.resetForm)
-        .catch(this.handleError)
+        .catch(this.$refs.formErrorMessage.handleError)
     },
     updateStore (store, { data: { createRoom } }) {
       const { profile } = store.readQuery({ query: profileQuery })

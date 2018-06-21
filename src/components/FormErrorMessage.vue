@@ -1,3 +1,10 @@
+<template>
+  <v-alert type="error" v-model="hasError">
+    {{ errorMessage }}
+  </v-alert>
+</template>
+
+<script>
 export default {
   data: () => ({
     errorMessage: '',
@@ -10,3 +17,4 @@ export default {
     }
   }
 }
+</script>
