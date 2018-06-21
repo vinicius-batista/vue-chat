@@ -3,14 +3,18 @@
     <FormBox :title="'Register'">
       <v-form v-model="valid" @submit.prevent="handleSubmit">
         <FormErrorMessage ref="formErrorMessage" />
-        <v-text-field v-for="{ label, model, icon, type } in fields"
-          :type="type"
-          :key="model"
-          :label="label"
-          v-model="input[model]"
-          :prepend-icon="icon"
-          :rules="rules[model]"
-        />
+        <ValidationRules :fields="Object.keys(this.input)">
+          <template slot-scope="{ rules }">
+            <v-text-field v-for="{ label, model, icon, type } in fields"
+              :type="type"
+              :key="model"
+              :label="label"
+              v-model="input[model]"
+              :prepend-icon="icon"
+              :rules="rules[model]"
+            />
+          </template>
+        </ValidationRules>
         <FormActions
           :buttonText="'Register'"
           :buttonDisable="!valid"
@@ -26,9 +30,8 @@
 import FormBox from '../components/FormBox'
 import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
-import { rules } from '@/support/mixins/'
 import { registerUserMutation } from '@/domains/auth/graphql'
-import { FormErrorMessage } from '@/components'
+import { FormErrorMessage, ValidationRules } from '@/components'
 
 export default {
   name: 'Register',
@@ -36,11 +39,9 @@ export default {
     FormBox,
     FormLayout,
     FormActions,
-    FormErrorMessage
+    FormErrorMessage,
+    ValidationRules
   },
-  mixins: [
-    rules(['email', 'password', 'name', 'username'])
-  ],
   data: () => ({
     input: {
       email: '',

@@ -6,12 +6,16 @@
         <v-card-title class="headline">Update Profile</v-card-title>
         <v-card-text>
           <FormErrorMessage ref="formErrorMessage" />
-          <v-text-field v-for="{ label, model } in fields"
-            :key="model"
-            :label="label"
-            v-model="input[model]"
-            :rules="rules[model]"
-          />
+          <ValidationRules :fields="Object.keys(this.input)">
+            <template slot-scope="{ rules }">
+              <v-text-field v-for="{ label, model } in fields"
+                :key="model"
+                :label="label"
+                v-model="input[model]"
+                :rules="rules[model]"
+              />
+            </template>
+          </ValidationRules>
         </v-card-text>
         <FormModalActions
           :sendDisabled="!valid"
@@ -23,8 +27,8 @@
 </template>
 
 <script>
-import { rules, modal } from '@/support/mixins'
-import { FormModalActions, FormErrorMessage } from '@/components'
+import { modal } from '@/support/mixins'
+import { FormModalActions, FormErrorMessage, ValidationRules } from '@/components'
 import { updateProfileMutation, profileQuery } from '@/domains/user/graphql'
 import { merge } from 'ramda'
 
@@ -32,11 +36,11 @@ export default {
   name: 'ProfileModal',
   components: {
     FormModalActions,
-    FormErrorMessage
+    FormErrorMessage,
+    ValidationRules
   },
   mixins: [
-    modal,
-    rules(['email', 'name', 'username'])
+    modal
   ],
   data: () => ({
     valid: false,

@@ -6,13 +6,17 @@
         <v-card-title class="headline">Change password</v-card-title>
         <v-card-text>
           <FormErrorMessage ref="formErrorMessage" />
-          <v-text-field v-for="{ label, model } in fields"
-            type="password"
-            :key="model"
-            :label="label"
-            v-model="input[model]"
-            :rules="rules[model]"
-          />
+          <ValidationRules :fields="Object.keys(this.input)">
+            <template slot-scope="{ rules }">
+              <v-text-field v-for="{ label, model } in fields"
+                type="password"
+                :key="model"
+                :label="label"
+                v-model="input[model]"
+                :rules="rules[model]"
+              />
+            </template>
+          </ValidationRules>
         </v-card-text>
         <FormModalActions
           :sendDisabled="!valid"
@@ -24,20 +28,20 @@
 </template>
 
 <script>
-import { modal, rules } from '@/support/mixins'
+import { modal } from '@/support/mixins'
 import FormModalActions from '@/components/FormModalActions'
 import { changePasswordMutation } from '@/domains/user/graphql'
-import { FormErrorMessage } from '@/components'
+import { FormErrorMessage, ValidationRules } from '@/components'
 
 export default {
   name: 'SettingsModal',
   components: {
     FormModalActions,
-    FormErrorMessage
+    FormErrorMessage,
+    ValidationRules
   },
   mixins: [
-    modal,
-    rules(['newPassword', 'oldPassword'])
+    modal
   ],
   data: () => ({
     valid: '',

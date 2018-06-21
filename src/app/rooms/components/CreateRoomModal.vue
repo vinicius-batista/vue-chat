@@ -6,12 +6,16 @@
         <v-card-title class="headline">New Room</v-card-title>
         <v-card-text>
           <FormErrorMessage ref="formErrorMessage" />
-          <v-text-field v-for="{ label, model } in fields"
-            :key="model"
-            :label="label"
-            v-model="input[model]"
-            :rules="rules[model]"
-          />
+          <ValidationRules :fields="Object.keys(this.input)">
+            <template slot-scope="{ rules }">
+              <v-text-field v-for="{ label, model } in fields"
+                :key="model"
+                :label="label"
+                v-model="input[model]"
+                :rules="rules[model]"
+              />
+            </template>
+          </ValidationRules>
         </v-card-text>
         <FormModalActions
           :sendDisabled="!valid"
@@ -23,21 +27,21 @@
 </template>
 
 <script>
-import { rules, modal } from '@/support/mixins'
+import { modal } from '@/support/mixins'
 import { createRoomMutation } from '@/domains/rooms/graphql'
 import { profileQuery } from '@/domains/user/graphql'
 import { append, assoc } from 'ramda'
-import { FormModalActions, FormErrorMessage } from '@/components'
+import { FormModalActions, FormErrorMessage, ValidationRules } from '@/components'
 
 export default {
   name: 'CreateRoomModal',
   components: {
     FormModalActions,
-    FormErrorMessage
+    FormErrorMessage,
+    ValidationRules
   },
   mixins: [
-    modal,
-    rules(['name', 'description'])
+    modal
   ],
   data: () => ({
     valid: false,
