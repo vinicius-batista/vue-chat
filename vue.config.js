@@ -1,5 +1,5 @@
 module.exports = {
-  lintOnSave: false,
+  lintOnSave: true,
   chainWebpack: config => {
     config.module
       .rule('graphql')

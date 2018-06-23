@@ -1,5 +1,5 @@
 <template functional>
-  <v-list-tile @click="">
+  <v-list-tile @click.prevent>
     <v-list-tile-action>
       <v-icon>{{ props.icon }}</v-icon>
     </v-list-tile-action>
