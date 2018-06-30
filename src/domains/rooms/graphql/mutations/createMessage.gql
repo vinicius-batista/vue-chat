@@ -1,7 +1,5 @@
-#import '../fragments/Message.gql'
-
 mutation($input: CreateMessageInput!) {
   createMessage(input: $input) {
-    ...Message
+    id
   }
 }

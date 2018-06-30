@@ -6,14 +6,20 @@
     disable-resize-watcher
     :value="visibility"
   >
-    <UserInfo :user="user"/>
-    <v-list class="pt-0">
-      <MyRoomsList :rooms="rooms" />
-      <CreateRoomModal />
-      <ProfileModal />
-      <SettingsModal />
-      <LogoutModal />
-    </v-list>
+    <ApolloQuery :query="profileQuery">
+      <template slot-scope="{ result: { data } }">
+        <div v-if="data">
+          <UserInfo :user="getUserInfo(data.profile)"/>
+          <v-list class="pt-0">
+            <MyRoomsList :rooms="data.profile.rooms" />
+            <CreateRoomModal />
+            <ProfileModal />
+            <SettingsModal />
+            <LogoutModal />
+          </v-list>
+        </div>
+      </template>
+    </ApolloQuery>
   </v-navigation-drawer>
 </template>
 
@@ -26,7 +32,7 @@ import CreateRoomModal from '@/app/rooms/components/CreateRoomModal'
 import ProfileModal from '@/app/user/components/ProfileModal'
 import SettingsModal from '@/app/user/components/SettingsModal'
 import { profileQuery } from '@/domains/user/graphql'
-import { dissoc, prop } from 'ramda'
+import { dissoc } from 'ramda'
 
 export default {
   name: 'SideBar',
@@ -46,22 +52,11 @@ export default {
     }
   },
   data: () => ({
-    user: {
-      id: '',
-      name: '',
-      username: '',
-      email: ''
-    },
-    rooms: []
+    profileQuery
   }),
-  apollo: {
-    profile: {
-      query: profileQuery,
-      manual: true,
-      result ({ data: { profile } }) {
-        this.user = dissoc('rooms', profile)
-        this.rooms = prop('rooms', profile)
-      }
+  methods: {
+    getUserInfo (profileResult) {
+      return dissoc('rooms', profileResult)
     }
   }
 }

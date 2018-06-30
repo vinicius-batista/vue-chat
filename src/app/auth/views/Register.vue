@@ -1,27 +1,38 @@
 <template>
  <FormLayout>
     <FormBox :title="'Register'">
-      <v-form v-model="valid" @submit.prevent="handleSubmit">
-        <FormErrorMessage ref="formErrorMessage" />
-        <ValidationRules :fields="Object.keys(this.input)">
-          <template slot-scope="{ rules }">
-            <v-text-field v-for="{ label, model, icon, type } in fields"
-              :type="type"
-              :key="model"
-              :label="label"
-              v-model="input[model]"
-              :prepend-icon="icon"
-              :rules="rules[model]"
+      <ApolloMutation
+        :mutation="registerUserMutation"
+        @done="pushToLogin()"
+        @error="handleError"
+      >
+        <template slot-scope="{ mutate }">
+          <v-form
+            v-model="valid"
+            @submit.prevent="mutate({ variables: { input } })"
+          >
+            <FormErrorMessage ref="formErrorMessage" />
+            <ValidationRules :fields="Object.keys(input)">
+              <template slot-scope="{ rules }">
+                <v-text-field v-for="{ label, model, icon, type } in fields"
+                  :type="type"
+                  :key="model"
+                  :label="label"
+                  v-model="input[model]"
+                  :prepend-icon="icon"
+                  :rules="rules[model]"
+                />
+              </template>
+            </ValidationRules>
+            <FormActions
+              :buttonText="'Register'"
+              :buttonDisable="!valid"
+              :subText="`Already have an account? Login!`"
+              @subClick="pushToLogin"
             />
-          </template>
-        </ValidationRules>
-        <FormActions
-          :buttonText="'Register'"
-          :buttonDisable="!valid"
-          :subText="`Already have an account? Login!`"
-          @subClick="pushToLogin"
-        />
-      </v-form>
+          </v-form>
+        </template>
+      </ApolloMutation>
     </FormBox>
  </FormLayout>
 </template>
@@ -43,6 +54,7 @@ export default {
     ValidationRules
   },
   data: () => ({
+    registerUserMutation,
     input: {
       email: '',
       password: '',
@@ -75,15 +87,8 @@ export default {
     ]
   }),
   methods: {
-    handleSubmit () {
-      return this.$apollo.mutate({
-        mutation: registerUserMutation,
-        variables: {
-          input: this.input
-        }
-      })
-        .then(this.pushToLogin)
-        .catch(this.$refs.formErrorMessage.handleError)
+    handleError (error) {
+      this.$refs.formErrorMessage.handleError(error)
     },
     pushToLogin () {
       return this.$router.push({ name: 'auth.login' })
