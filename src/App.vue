@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-content>
-      <v-container grid-list-xs>
+      <v-container grid-list-xs :style="{ padding: 0 }">
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -9,7 +9,7 @@
 </template>
 
 <style lang="scss">
- body, html {
-   overflow: hidden;
+  html {
+   overflow: hidden !important;
  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container grid-list-xs :style="{ padding: 0 }">
     <ApolloQuery
       :query="roomQuery"
       :variables="{ id: roomId }"
