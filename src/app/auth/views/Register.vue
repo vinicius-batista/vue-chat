@@ -12,6 +12,7 @@
             @submit.prevent="mutate({ variables: { input } })"
           >
             <FormErrorMessage ref="formErrorMessage" />
+            <ProfileUpload v-model="input.profilePicFile"/>
             <ValidationRules :fields="Object.keys(input)">
               <template slot-scope="{ rules }">
                 <v-text-field v-for="{ label, model, icon, type } in fields"
@@ -43,6 +44,7 @@ import FormLayout from '../components/FormLayout'
 import FormActions from '../components/FormActions'
 import { registerUserMutation } from '@/domains/auth/graphql'
 import { FormErrorMessage, ValidationRules } from '@/components'
+import ProfileUpload from '@/app/user/components/ProfileUpload'
 
 export default {
   name: 'Register',
@@ -51,7 +53,8 @@ export default {
     FormLayout,
     FormActions,
     FormErrorMessage,
-    ValidationRules
+    ValidationRules,
+    ProfileUpload
   },
   data: () => ({
     registerUserMutation,
@@ -59,7 +62,8 @@ export default {
       email: '',
       password: '',
       name: '',
-      username: ''
+      username: '',
+      profilePicFile: null
     },
     valid: false,
     fields: [
