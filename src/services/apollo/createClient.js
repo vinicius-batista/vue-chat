@@ -1,13 +1,13 @@
 import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from './createHttpLink'
 import { createSocketLink } from './createSocketLink'
 import { withAuthToken } from './authContext'
 import { ApolloLink } from 'apollo-link'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { hasSubscription } from '@jumpn/utils-graphql'
+import { createLink } from 'apollo-absinthe-upload-link'
 
 export const createApolloClient = ({ httpEndpoint, socketEndpoint }) => {
-  const httpLink = createHttpLink(httpEndpoint)
+  const httpLink = createLink({ uri: httpEndpoint })
   const wsLink = createSocketLink(socketEndpoint)
 
   const link = ApolloLink.split(

@@ -17,6 +17,7 @@
             <v-card-title class="headline">Update Profile</v-card-title>
             <v-card-text>
               <FormErrorMessage ref="formErrorMessage" />
+              <ProfileUpload v-model="input.profilePicFile"/>
               <ValidationRules :fields="Object.keys(input)">
                 <template slot-scope="{ rules }">
                   <v-text-field v-for="{ label, model } in fields"
@@ -41,27 +42,32 @@
 
 <script>
 import { modal } from '@/support/mixins'
-import { FormModalActions, FormErrorMessage, ValidationRules } from '@/components'
+import {
+  FormModalActions,
+  FormErrorMessage,
+  ValidationRules
+} from '@/components'
 import { updateProfileMutation, profileQuery } from '@/domains/user/graphql'
 import { merge } from 'ramda'
+import ProfileUpload from './ProfileUpload'
 
 export default {
   name: 'ProfileModal',
   components: {
     FormModalActions,
     FormErrorMessage,
-    ValidationRules
+    ValidationRules,
+    ProfileUpload
   },
-  mixins: [
-    modal
-  ],
+  mixins: [modal],
   data: () => ({
     updateProfileMutation,
     valid: false,
     input: {
       name: '',
       username: '',
-      email: ''
+      email: '',
+      profilePicFile: null
     },
     fields: [
       {
