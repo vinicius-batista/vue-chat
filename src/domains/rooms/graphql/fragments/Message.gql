@@ -7,7 +7,8 @@ fragment Message on Message {
   user {
     ... on User {
       id,
-      username
+      username,
+      profilePic
     }
   }
 }

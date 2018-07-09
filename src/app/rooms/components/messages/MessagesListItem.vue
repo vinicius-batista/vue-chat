@@ -1,6 +1,12 @@
 <template>
-  <v-layout class="pa-4" :class="isSent()">
-    <v-flex xs4>
+  <v-layout class="pa-3" :class="isSent">
+    <v-flex xs4 class="display-flex">
+      <UserAvatar
+        v-if="!isSameId"
+        :profilePic="user.profilePic"
+        :name="user.username"
+        class="user-avatar"
+      />
       <v-card class="message grey darken-3">
         <v-card-title class="pt-2 pb-0 body-1">{{ user.username }}</v-card-title>
         <v-card-text class="py-1">
@@ -16,9 +22,11 @@
 import { isToday } from '@/helpers/isToday'
 import moment from 'moment'
 import { equals } from 'ramda'
+import UserAvatar from '@/app/user/components/UserAvatar'
 
 export default {
   name: 'MessagesListItem',
+  components: { UserAvatar },
   props: {
     user: {
       type: Object,
@@ -37,15 +45,17 @@ export default {
       required: true
     }
   },
-  methods: {
-    isSent () {
-      const isSameId = equals(
+  computed: {
+    isSameId () {
+      return equals(
         this.user.id,
         this.currentUserId
       )
+    },
+    isSent () {
       return {
-        sent: isSameId,
-        received: !isSameId
+        sent: this.isSameId,
+        received: !this.isSameId
       }
     }
   },
@@ -76,8 +86,19 @@ export default {
   width: 100%;
 
   .message {
+    width: 100%;
     order: 1;
     border-radius: 5px 5px 5px 0px;
+  }
+
+  .display-flex {
+    display: flex;
+  }
+
+  .user-avatar {
+    min-width: 48px;
+    margin: 0.2em;
+    align-self: center;
   }
 }
 
