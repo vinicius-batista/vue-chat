@@ -44,6 +44,7 @@ import { modal } from '@/support/mixins'
 import FormModalActions from '@/components/FormModalActions'
 import { changePasswordMutation } from '@/domains/user/graphql'
 import { FormErrorMessage, ValidationRules } from '@/components'
+import { settingsModal as fields } from '@/domains/forms'
 
 export default {
   name: 'SettingsModal',
@@ -62,16 +63,7 @@ export default {
       newPassword: '',
       oldPassword: ''
     },
-    fields: [
-      {
-        label: 'Old Password',
-        model: 'oldPassword'
-      },
-      {
-        label: 'New Password',
-        model: 'newPassword'
-      }
-    ]
+    fields
   }),
   methods: {
     submitSuccess () {

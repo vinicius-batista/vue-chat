@@ -45,6 +45,7 @@ import FormActions from '../components/FormActions'
 import { registerUserMutation } from '@/domains/auth/graphql'
 import { FormErrorMessage, ValidationRules } from '@/components'
 import ProfileUpload from '@/app/user/components/ProfileUpload'
+import { register as fields } from '@/domains/forms'
 
 export default {
   name: 'Register',
@@ -66,29 +67,7 @@ export default {
       profilePicFile: null
     },
     valid: false,
-    fields: [
-      {
-        label: 'Name',
-        model: 'name',
-        icon: 'person'
-      },
-      {
-        label: 'Username',
-        model: 'username',
-        icon: 'perm_identity'
-      },
-      {
-        label: 'Email',
-        model: 'email',
-        icon: 'email'
-      },
-      {
-        label: 'Password',
-        model: 'password',
-        icon: 'lock',
-        type: 'password'
-      }
-    ]
+    fields
   }),
   methods: {
     handleError (error) {

@@ -45,6 +45,7 @@ import { createRoomMutation } from '@/domains/rooms/graphql'
 import { profileQuery } from '@/domains/user/graphql'
 import { append, assoc } from 'ramda'
 import { FormModalActions, FormErrorMessage, ValidationRules } from '@/components'
+import { createRoomModal as fields } from '@/domains/forms'
 
 export default {
   name: 'CreateRoomModal',
@@ -63,16 +64,7 @@ export default {
       name: '',
       description: ''
     },
-    fields: [
-      {
-        label: 'Name',
-        model: 'name'
-      },
-      {
-        label: 'Description',
-        model: 'description'
-      }
-    ]
+    fields
   }),
   methods: {
     updateStore (store, { data: { createRoom } }) {

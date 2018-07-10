@@ -45,6 +45,7 @@ import { getData } from '@/helpers/getData'
 import { setTokens } from '@/helpers/setTokens'
 import { loginUserMutation } from '@/domains/auth/graphql'
 import { FormErrorMessage, ValidationRules } from '@/components'
+import { login as fields } from '@/domains/forms'
 
 export default {
   name: 'Login',
@@ -62,19 +63,7 @@ export default {
       email: '',
       password: ''
     },
-    fields: [
-      {
-        label: 'Email',
-        model: 'email',
-        icon: 'email'
-      },
-      {
-        label: 'Password',
-        model: 'password',
-        icon: 'lock',
-        type: 'password'
-      }
-    ]
+    fields
   }),
   methods: {
     handleError (error) {

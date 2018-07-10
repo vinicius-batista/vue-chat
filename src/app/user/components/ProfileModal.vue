@@ -50,6 +50,7 @@ import {
 import { updateProfileMutation, profileQuery } from '@/domains/user/graphql'
 import { merge } from 'ramda'
 import ProfileUpload from './ProfileUpload'
+import { profileModal as fields } from '@/domains/forms'
 
 export default {
   name: 'ProfileModal',
@@ -69,20 +70,7 @@ export default {
       email: '',
       profilePicFile: null
     },
-    fields: [
-      {
-        label: 'Name',
-        model: 'name'
-      },
-      {
-        label: 'Username',
-        model: 'username'
-      },
-      {
-        label: 'Email',
-        model: 'email'
-      }
-    ]
+    fields
   }),
   methods: {
     submitSuccess () {

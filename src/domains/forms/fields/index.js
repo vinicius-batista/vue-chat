@@ -1,0 +1,7 @@
+export { default as name } from './name'
+export { default as email } from './email'
+export { default as password } from './password'
+export { default as username } from './username'
+export { default as oldPassword } from './oldPassword'
+export { default as newPassword } from './newPassword'
+export { default as description } from './description'
