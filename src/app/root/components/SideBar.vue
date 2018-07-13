@@ -9,7 +9,7 @@
     <ApolloQuery :query="profileQuery">
       <template slot-scope="{ result: { data } }">
         <div v-if="data">
-          <UserInfo :user="getUserInfo(data.profile)"/>
+          <UserInfo v-bind="getUserInfo(data.profile)"/>
           <v-list class="pt-0">
             <MyRoomsList :rooms="data.profile.rooms" />
             <CreateRoomModal />
