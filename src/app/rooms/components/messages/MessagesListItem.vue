@@ -1,32 +1,19 @@
-<template>
-  <v-layout class="pa-3" :class="isSent">
-    <v-flex xs4 class="display-flex">
-      <UserAvatar
-        v-if="!isSameId"
-        :profilePic="user.profilePic"
-        :name="user.username"
-        class="user-avatar"
-      />
-      <v-card class="message grey darken-3">
-        <v-card-title class="pt-2 pb-0 body-1">{{ user.username }}</v-card-title>
-        <v-card-text class="py-1">
-          <span class="white--text caption">{{ text }}</span>
-          <span class="white--text time">{{ insertedAt | getTime }}</span>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-  </v-layout>
-</template>
-
 <script>
 import { isToday } from '@/helpers/isToday'
 import moment from 'moment'
 import { equals } from 'ramda'
 import UserAvatar from '@/app/user/components/UserAvatar'
 
+function getTime (date) {
+  const dateMoment = moment(date)
+  return isToday(dateMoment)
+    ? dateMoment.format('hh:mm')
+    : dateMoment.format('MMM D, hh:mm')
+}
+
 export default {
   name: 'MessagesListItem',
-  components: { UserAvatar },
+  functional: true,
   props: {
     user: {
       type: Object,
@@ -45,27 +32,30 @@ export default {
       required: true
     }
   },
-  computed: {
-    isSameId () {
-      return equals(
-        this.user.id,
-        this.currentUserId
-      )
-    },
-    isSent () {
-      return {
-        sent: this.isSameId,
-        received: !this.isSameId
-      }
-    }
-  },
-  filters: {
-    getTime (date) {
-      const dateMoment = moment(date)
-      return isToday(dateMoment)
-        ? dateMoment.format('hh:mm')
-        : dateMoment.format('MMM D, hh:mm')
-    }
+  render (h, { props, listeners }) {
+    const { user, text, insertedAt, currentUserId } = props
+    const isSameId = equals(user.id, currentUserId)
+    const isSent = { sent: isSameId, received: !isSameId }
+
+    return (
+      <v-layout staticClass='pa-3' class={isSent}>
+        <v-flex xs4 class='display-flex'>
+          {!isSameId &&
+            <UserAvatar
+              profilePic={user.profilePic}
+              name={user.username}
+              class='user-avatar'
+            />}
+          <v-card class='message grey darken-3' {...{on: listeners}}>
+            <v-card-title class='pt-2 pb-0 body-1'>{ user.username }</v-card-title>
+            <v-card-text class='py-1'>
+              <span class='white--text caption'>{ text }</span>
+              <span class='white--text time'>{ getTime(insertedAt) }</span>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    )
   }
 }
 </script>
