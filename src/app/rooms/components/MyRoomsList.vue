@@ -1,12 +1,6 @@
 <script>
 import RoomsListItem from './RoomsListItem'
 
-const renderRoomsListItem = room =>
-  <RoomsListItem
-    key={room.id}
-    room={room}
-  />
-
 export default {
   name: 'RoomsList',
   functional: true,
@@ -24,7 +18,12 @@ export default {
           <v-list-tile-title>My Rooms</v-list-tile-title>
         </v-list-tile>
         <v-list dense two-line>
-          { rooms.map(renderRoomsListItem)}
+          { rooms.map(room =>
+            <RoomsListItem
+              key={room.id}
+              room={room}
+            />
+          )}
         </v-list>
       </v-list-group>
     )
