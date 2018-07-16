@@ -5,18 +5,14 @@ export const beforeEach = (to, from, next) => {
 
   return store
     .isLogged()
-    .then(() => {
-      if (requiresAuth) {
-        return next()
-      }
-
-      return next({ name: 'root' })
-    })
-    .catch(() => {
-      if (requiresAuth) {
-        return next({ name: 'auth.login' })
-      }
-
-      return next()
-    })
+    .then(() =>
+      requiresAuth
+        ? next()
+        : next({ name: 'root' })
+    )
+    .catch(() =>
+      requiresAuth
+        ? next({ name: 'auth.login' })
+        : next()
+    )
 }
